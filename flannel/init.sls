@@ -1,9 +1,6 @@
 {% from "flannel/map.jinja" import flannel with context %}
 {% set flannel_version = "0.5.5" -%}
 
-include:
-  - etcd
-
 flannel_install:
   archive.extracted:
     - name: {{ flannel.tmp_dir }}
@@ -45,8 +42,6 @@ flannel_config:
     - name: /coreos.com/network/config
     - value: '{ "Network": "172.16.0.0/12", "Backend": { "Type": "vxlan", "VNI": 1 } }'
     - profile: etcd_local
-    - require:
-      - sls: etcd
 
 flannel_service:
   file.managed:
