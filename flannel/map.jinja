@@ -1,0 +1,7 @@
+{% set flannel = salt['grains.filter_by']({
+    'Debian': {
+        'tmp_dir': '/tmp',
+        'config_dir': '/etc/default',
+        'prefix': '/usr/local',
+    },
+}, merge=salt['pillar.get']('flannel:lookup')) %}
