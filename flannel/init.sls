@@ -1,4 +1,5 @@
 {% from "flannel/map.jinja" import flannel with context %}
+{% set settings = salt['pillar.get']('flannel:lookup:settings', {}) %}
 {% set flannel_version = "0.5.5" -%}
 
 flannel_install:
@@ -40,7 +41,7 @@ flannel_install_cleanup:
 flannel_config:
   etcd.set:
     - name: /coreos.com/network/config
-    - value: '{ "Network": "172.16.0.0/12", "Backend": { "Type": "vxlan", "VNI": 1 } }'
+    - value: '{ "Network": "{{ settings.get('network', '172.16.0.0/12') }}", "Backend": { "Type": "vxlan", "VNI": 1 } }'
     - profile: etcd_local
 
 flannel_service:
