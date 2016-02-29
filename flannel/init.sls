@@ -39,10 +39,15 @@ flannel_install_cleanup:
       - file: flannel_install
 
 flannel_config:
+  pkg.installed:
+    - python-etcd
+
   etcd.set:
     - name: /coreos.com/network/config
     - value: '{ "Network": "{{ settings.get('network', '172.16.0.0/12') }}", "Backend": { "Type": "vxlan", "VNI": 1 } }'
     - profile: etcd_local
+    - require:
+      - pkg: flannel_config
 
 flannel_service:
   file.managed:
