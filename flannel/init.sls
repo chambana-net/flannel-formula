@@ -40,7 +40,8 @@ flannel_install_cleanup:
 
 flannel_config:
   pkg.installed:
-    - python-etcd
+    - pkgs:
+      - python-etcd
 
   etcd.set:
     - name: /coreos.com/network/config
