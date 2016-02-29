@@ -59,3 +59,19 @@ flannel_service:
       - file: flannel_install
       - file: flannel_service
       - etcd: flannel_config
+
+flannel_docker:
+  file.managed:
+    - name: /etc/systemd/system/docker.service.d/subnet.conf
+    - source: salt://flannel/files/subnet.conf
+    - user: root
+    - group: root
+    - mode: 0644
+    - require:
+      - service: flannel_service
+
+  service.running:
+    - name: docker
+    - enable: True
+    - watch:
+      - file: flannel_docker
