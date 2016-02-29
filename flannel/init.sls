@@ -73,6 +73,7 @@ flannel_docker:
     - user: root
     - group: root
     - mode: 0644
+    - makedirs: True
     - require:
       - service: flannel_service
 
